@@ -1,43 +1,577 @@
-:root{color-scheme:dark;--preto:#1a1d24;--preto3:#0d1017;--branco:#cbcae0;--vermelho:#711b22;--bg:var(--preto);--verde:var(--preto3);--acento:var(--vermelho);--tinta:var(--branco);--suave:#9b9cae;--linha:#2f3138}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tinta);font:17px/1.6 Helvetica,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-a:focus-visible,button:focus-visible{outline:3px solid var(--tinta);outline-offset:2px}
-.wrap{max-width:1352px;margin:0 auto;padding:0 20px}
-.faixa{background:var(--verde);color:var(--branco);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
-.faixa .wrap{display:flex;justify-content:space-between;padding-top:10px;padding-bottom:10px}
-.marca{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px 20px 20px}
-.marca h1{margin:0;font-size:clamp(40px,8vw,72px);font-weight:900;letter-spacing:-.05em;line-height:1}
-.marca h1 span{color:var(--acento)}
-.marca small{display:block;margin-top:8px;color:var(--suave);letter-spacing:.2em;font-size:13px}
-.lema{font:italic 18px Georgia,serif;max-width:220px;text-align:right}
-nav{border-top:1px solid var(--linha);border-bottom:2px solid var(--tinta)}
-nav ul{display:flex;flex-wrap:wrap;gap:12px 28px;list-style:none;margin:0;padding:16px 20px}
-nav a{font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase}
-nav a[aria-current=page]{border-bottom:3px solid var(--acento);padding-bottom:4px}
-.secao{border-top:5px solid var(--tinta);margin-top:36px;padding-top:18px}
-.secao header{display:flex;justify-content:space-between;align-items:baseline}
-h2,.titulo{font-family:Georgia,serif;font-weight:700;letter-spacing:-.02em}
-.secao h2{font-size:34px;margin:0}
-.ver{color:var(--tinta);border-bottom:2px solid var(--acento);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
-.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:32px;margin:28px 0;min-height:140px}
-.card{border-top:1px solid var(--linha);padding-top:14px}
-.card.destaque{grid-column:1/-1}
-.card.destaque h3{font-size:clamp(28px,4vw,42px)}
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:12px}
-.cat{color:var(--tinta);display:inline-block;border-bottom:2px solid var(--acento);font-weight:800;font-size:13px}
-.card h3{font:700 22px/1.2 Georgia,serif;margin:6px 0}
-.card:hover h3{text-decoration:underline}
-.meta{color:var(--suave);font-size:14px}
-.vazio{padding:30px 0;border-bottom:1px solid var(--linha)}
-article.noticia{max-width:680px;margin:40px auto}
-article.noticia h1{font:700 clamp(30px,5vw,46px)/1.15 Georgia,serif;letter-spacing:-.02em;margin:8px 0 12px}
-article.noticia p{font:19px/1.75 Georgia,serif}
-article.noticia img{width:100%;margin:18px 0}
-footer{background:var(--verde);color:var(--branco);margin-top:60px;padding:40px 0 20px}
-footer .cols{display:grid;grid-template-columns:2fr 1fr;gap:40px}
-footer h4{color:var(--branco);margin:0 0 10px}
-footer .logo{font-size:38px;font-weight:900;letter-spacing:-.05em;color:var(--branco)}
-footer .logo span{color:var(--branco)}
-footer .copy{border-top:1px solid rgba(225,225,242,.25);margin-top:30px;padding-top:16px;font-size:14px}
-@media(max-width:700px){.lema{display:none}footer .cols{grid-template-columns:1fr}}
+/* =========================================================
+   VOZES DA CLASSE - estilo.css
+   Desktop = como já estava | Mobile = bloco no final (max-width: 700px)
+   ========================================================= */
+
+
+/* ---------- Cores ---------- */
+:root {
+  color-scheme: dark;
+
+  --preto: #1a1d24;
+  --preto3: #0d1017;
+  --branco: #cbcae0;
+  --vermelho: #711b22;
+
+  --bg: var(--preto);
+  --verde: var(--preto3);
+  --acento: var(--vermelho);
+  --tinta: var(--branco);
+  --suave: #9b9cae;
+  --linha: #2f3138;
+}
+
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tinta);
+  font: 17px/1.6 Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--tinta);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.wrap {
+  max-width: 1352px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+/* ---------- Faixa do topo (só desktop) ---------- */
+.faixa {
+  background: var(--verde);
+  color: var(--branco);
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.faixa .wrap {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+/* ---------- Marca (nome + logo) ---------- */
+.marca {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 20px 20px;
+}
+
+/* link da esquerda: logo ao lado do nome */
+.marca .esq {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.marca h1 {
+  margin: 0;
+  font-size: clamp(40px, 8vw, 72px);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  line-height: 1;
+}
+
+.marca h1 span {
+  color: var(--acento);
+}
+
+.marca small {
+  display: block;
+  margin-top: 8px;
+  color: var(--suave);
+  letter-spacing: .2em;
+  font-size: 13px;
+}
+
+.lema {
+  font: italic 18px Georgia, serif;
+  max-width: 220px;
+  text-align: right;
+}
+
+
+/* ---------- Espaço da logo (img/logo.svg) ---------- */
+.logo-slot {
+  display: block;
+  height: 64px;
+  width: auto;
+  max-width: 140px;
+}
+
+
+/* ---------- Menu de seções (desktop) ---------- */
+nav {
+  border-top: 1px solid var(--linha);
+  border-bottom: 2px solid var(--tinta);
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  list-style: none;
+  margin: 0;
+  padding: 16px 20px;
+}
+
+nav a {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+nav a[aria-current=page] {
+  border-bottom: 3px solid var(--acento);
+  padding-bottom: 4px;
+}
+
+
+/* ---------- Barra e painéis do mobile (escondidos no desktop) ---------- */
+.barra-mobile {
+  display: none;
+}
+
+.painel {
+  display: none;
+}
+
+
+/* ---------- Seções ---------- */
+.secao {
+  border-top: 5px solid var(--tinta);
+  margin-top: 36px;
+  padding-top: 18px;
+}
+
+.secao header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+h2,
+.titulo {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.secao h2 {
+  font-size: 34px;
+  margin: 0;
+}
+
+.ver {
+  color: var(--tinta);
+  border-bottom: 2px solid var(--acento);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* botão "ver todas" do fim da lista: só aparece no mobile */
+.mais-mobile {
+  display: none;
+}
+
+
+/* ---------- Grade de notícias ---------- */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  margin: 28px 0;
+  min-height: 140px;
+}
+
+.card {
+  border-top: 1px solid var(--linha);
+  padding-top: 14px;
+}
+
+.card.destaque {
+  grid-column: 1 / -1;
+}
+
+.card.destaque h3 {
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.cat {
+  color: var(--tinta);
+  display: inline-block;
+  border-bottom: 2px solid var(--acento);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.card h3 {
+  font: 700 22px/1.2 Georgia, serif;
+  margin: 6px 0;
+}
+
+.card:hover h3 {
+  text-decoration: underline;
+}
+
+.meta {
+  color: var(--suave);
+  font-size: 14px;
+}
+
+.vazio {
+  padding: 30px 0;
+  border-bottom: 1px solid var(--linha);
+}
+
+
+/* ---------- Página da notícia ---------- */
+article.noticia {
+  max-width: 680px;
+  margin: 40px auto;
+}
+
+article.noticia h1 {
+  font: 700 clamp(30px, 5vw, 46px)/1.15 Georgia, serif;
+  letter-spacing: -.02em;
+  margin: 8px 0 12px;
+}
+
+article.noticia p {
+  font: 19px/1.75 Georgia, serif;
+}
+
+article.noticia img {
+  width: 100%;
+  margin: 18px 0;
+}
+
+
+/* ---------- Rodapé ---------- */
+footer {
+  background: var(--verde);
+  color: var(--branco);
+  margin-top: 60px;
+  padding: 40px 0 20px;
+}
+
+footer .cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+footer h4 {
+  color: var(--branco);
+  margin: 0 0 10px;
+}
+
+footer .logo {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -.05em;
+  color: var(--branco);
+}
+
+footer .logo span {
+  color: var(--branco);
+}
+
+footer .copy {
+  border-top: 1px solid rgba(225, 225, 242, .25);
+  margin-top: 30px;
+  padding-top: 16px;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   MOBILE (até 700px)
+   Layout parecido com Mídia Ninja / ICL:
+   barra com menu | logo | busca, seções em linha rolável,
+   cards grandes com o título em cima da foto.
+   ========================================================= */
+@media (max-width: 700px) {
+
+  /* some o que é só de desktop */
+  .faixa,
+  .marca {
+    display: none;
+  }
+
+  .wrap {
+    padding: 0 12px;
+  }
+
+
+  /* ----- barra do topo: menu | logo | busca ----- */
+  .barra-mobile {
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    align-items: center;
+    padding: 8px 8px;
+  }
+
+  .barra-mobile button {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: none;
+    border: 0;
+    color: var(--tinta);
+    cursor: pointer;
+  }
+
+  .barra-mobile svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* logo + nome no centro */
+  .barra-mobile .centro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .barra-mobile .logo-slot {
+    height: 32px;
+    max-width: 60px;
+  }
+
+  .barra-mobile .nome {
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: -.04em;
+  }
+
+  .barra-mobile .nome span {
+    color: var(--acento);
+  }
+
+
+  /* ----- painéis que abrem (menu e busca) ----- */
+  .painel {
+    display: block;
+    background: var(--verde);
+    padding: 12px 16px;
+    border-top: 1px solid var(--linha);
+  }
+
+  .painel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .painel li a {
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--linha);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .painel input {
+    width: 100%;
+    padding: 12px;
+    font: inherit;
+    background: var(--bg);
+    color: var(--tinta);
+    border: 1px solid var(--linha);
+    border-radius: 6px;
+  }
+
+
+  /* ----- seções em linha rolável (tipo "Notícias  Afluentes  Opinião") ----- */
+  nav {
+    border-top: 0;
+    border-bottom: 1px solid var(--linha);
+  }
+
+  nav ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 22px;
+    padding: 10px 16px;
+    scrollbar-width: none;
+  }
+
+  nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav a {
+    white-space: nowrap;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+
+  /* ----- título da seção ----- */
+  .secao {
+    border-top: 0;
+    margin-top: 18px;
+    padding-top: 0;
+  }
+
+  .secao h2 {
+    font-size: 24px;
+  }
+
+  /* o "ver todas" do cabeçalho some, fica só o botão do fim */
+  .secao header .ver {
+    display: none;
+  }
+
+
+  /* ----- lista de cards: uma coluna, bem juntinha ----- */
+  .grade {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 14px 0;
+    min-height: 0;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    padding-top: 0;
+    border-top: 0;
+    border-radius: 8px;
+    background: var(--verde);
+  }
+
+  .card img {
+    aspect-ratio: 4 / 3;
+    margin-bottom: 0;
+  }
+
+  /* card sem foto precisa de altura própria */
+  .card.sem-img {
+    min-height: 200px;
+  }
+
+  .card.destaque img {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* texto fica por cima da foto, com degradê escuro embaixo */
+  .card .texto {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 60px 14px 14px;
+    background: linear-gradient(to bottom, rgba(13, 16, 23, 0), rgba(13, 16, 23, .92));
+  }
+
+  /* etiqueta da categoria */
+  .cat {
+    background: var(--acento);
+    color: #fff;
+    border-bottom: 0;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .card h3,
+  .card.destaque h3 {
+    font-size: 20px;
+    line-height: 1.25;
+    margin: 8px 0 0;
+    color: #fff;
+  }
+
+  /* menos poluição: resumo e data ficam escondidos na lista */
+  .card .meta {
+    display: none;
+  }
+
+  .card:hover h3 {
+    text-decoration: none;
+  }
+
+
+  /* ----- botão "ver todas as notícias" ----- */
+  .mais-mobile {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 2px solid var(--acento);
+    border-radius: 6px;
+  }
+
+
+  /* ----- página da notícia ----- */
+  article.noticia {
+    margin: 24px auto;
+  }
+
+  article.noticia p {
+    font-size: 18px;
+  }
+
+
+  /* ----- rodapé ----- */
+  footer {
+    margin-top: 40px;
+  }
+
+  footer .cols {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  footer .logo {
+    font-size: 30px;
+  }
+}
