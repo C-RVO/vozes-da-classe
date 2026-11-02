@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel — Vozes da Classe</title>
+<style>
+body{font:16px/1.5 Helvetica,Arial,sans-serif;max-width:720px;margin:30px auto;padding:0 16px;background:#f3eee6;color:#222}
+h1{font-size:26px}label{display:block;margin-top:14px;font-weight:700}
+input,select,textarea{width:100%;padding:10px;font:inherit;border:1px solid #bbb;border-radius:4px}
+button{margin-top:18px;padding:12px 18px;font:inherit;font-weight:700;background:#243b36;color:#fff;border:0;border-radius:4px;cursor:pointer}
+.aviso{background:#fff;border-left:4px solid #cf5c3d;padding:10px 14px}
+</style></head><body>
+<h1>Painel de publicação</h1>
+<p class="aviso">Uso local. 1) Carregue o arquivo <b>frontend/data/noticias.json</b>. 2) Preencha a matéria. 3) Baixe o JSON atualizado, substitua o arquivo e faça o commit no GitHub.</p>
+<label>Arquivo noticias.json atual <input type="file" id="arq" accept=".json"></label>
+<label>Título <input id="titulo"></label>
+<label>Resumo <textarea id="resumo" rows="2"></textarea></label>
+<label>Seção <select id="categoria">
+<option value="politica">Política</option><option value="cidades">Cidades</option><option value="trabalho">Trabalho</option>
+<option value="direitos-sociais">Direitos Sociais</option><option value="economia">Economia</option><option value="cultura">Cultura</option>
+<option value="educacao">Educação</option><option value="meio-ambiente">Meio Ambiente</option></select></label>
+<label>Autor <input id="autor" value="Redação"></label>
+<label>Data <input type="date" id="data"></label>
+<label>Imagem (caminho, ex.: img/foto.jpg) <input id="imagem"></label>
+<label>Texto (separe parágrafos com uma linha em branco) <textarea id="corpo" rows="12"></textarea></label>
+<button id="gerar">Adicionar e baixar noticias.json</button>
+<p id="msg" role="status"></p>
+<script>
+let lista=[];const $=i=>document.getElementById(i);
+$('data').valueAsDate=new Date();
+$('arq').onchange=async e=>{try{lista=JSON.parse(await e.target.files[0].text());$('msg').textContent=lista.length+' matérias carregadas.'}
+ catch{$('msg').textContent='Arquivo inválido.'}};
+const slug=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+$('gerar').onclick=()=>{
+ if(!$('titulo').value.trim()||!$('corpo').value.trim()){$('msg').textContent='Preencha título e texto.';return}
+ let id=slug($('titulo').value);if(lista.some(n=>n.id===id))id+='-'+Date.now().toString(36);
+ lista.push({id,titulo:$('titulo').value.trim(),resumo:$('resumo').value.trim(),categoria:$('categoria').value,
+  autor:$('autor').value.trim(),data:$('data').value,imagem:$('imagem').value.trim(),legenda:'',
+  corpo:$('corpo').value.split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean)});
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(lista,null,2)],{type:'application/json'}));
+ a.download='noticias.json';a.click();$('msg').textContent='Matéria adicionada. Substitua frontend/data/noticias.json e faça o commit.'};
+</script></body></html>

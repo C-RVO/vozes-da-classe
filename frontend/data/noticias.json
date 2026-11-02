@@ -1,0 +1,13 @@
+[
+  {
+    "id": "exemplo-primeira-materia",
+    "titulo": "Exemplo: título da primeira reportagem",
+    "resumo": "Resumo curto que aparece no cartão da página inicial.",
+    "categoria": "cidades",
+    "autor": "Redação",
+    "data": "2026-11-02",
+    "imagem": "",
+    "legenda": "",
+    "corpo": ["Primeiro parágrafo da matéria.", "Segundo parágrafo da matéria."]
+  }
+]
