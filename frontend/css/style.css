@@ -1,10 +1,10 @@
-:root{--bg:#f3eee6;--verde:#243b36;--acento:#cf5c3d;--tinta:#222;--suave:#6b6b66;--linha:#ddd6ca}
+:root{--preto:#252228;--branco:#dfe0e5;--vermelho:#711b22;--bg:var(--branco);--verde:var(--preto);--acento:var(--vermelho);--tinta:var(--preto);--suave:#5b5860;--linha:#c4c5cc}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tinta);font:17px/1.6 Helvetica,Arial,sans-serif}
 a{color:inherit;text-decoration:none}
 a:focus-visible,button:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
 .wrap{max-width:1352px;margin:0 auto;padding:0 20px}
-.faixa{background:var(--verde);color:#fff;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.faixa{background:var(--verde);color:var(--branco);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
 .faixa .wrap{display:flex;justify-content:space-between;padding-top:10px;padding-bottom:10px}
 .marca{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px 20px 20px}
 .marca h1{margin:0;font-size:clamp(40px,8vw,72px);font-weight:900;letter-spacing:-.05em;line-height:1}
@@ -34,10 +34,10 @@ article.noticia{max-width:680px;margin:40px auto}
 article.noticia h1{font:700 clamp(30px,5vw,46px)/1.15 Georgia,serif;letter-spacing:-.02em;margin:8px 0 12px}
 article.noticia p{font:19px/1.75 Georgia,serif}
 article.noticia img{width:100%;margin:18px 0}
-footer{background:var(--verde);color:#cdd6d2;margin-top:60px;padding:40px 0 20px}
+footer{background:var(--verde);color:var(--branco);margin-top:60px;padding:40px 0 20px}
 footer .cols{display:grid;grid-template-columns:2fr 1fr;gap:40px}
-footer h4{color:#fff;margin:0 0 10px}
-footer .logo{font-size:38px;font-weight:900;letter-spacing:-.05em;color:#fff}
-footer .logo span{color:var(--acento)}
-footer .copy{border-top:1px solid #3a544d;margin-top:30px;padding-top:16px;font-size:14px}
+footer h4{color:var(--branco);margin:0 0 10px}
+footer .logo{font-size:38px;font-weight:900;letter-spacing:-.05em;color:var(--branco)}
+footer .logo span{color:var(--branco)}
+footer .copy{border-top:1px solid #45414b;margin-top:30px;padding-top:16px;font-size:14px}
 @media(max-width:700px){.lema{display:none}footer .cols{grid-template-columns:1fr}}
