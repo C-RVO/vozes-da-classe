@@ -84,7 +84,15 @@ const COLETIVO = {
   ],
 
   // frase final, em destaque
-  fecho: 'Um abraço e seja bem-vindo(a) ao Coletivo RVO!'
+  fecho: 'Um abraço e seja bem-vindo(a) ao Coletivo RVO!',
+
+  // perfil do coletivo no Instagram (links do destaque e do ícone final)
+  instagram: 'https://www.instagram.com/coletivo.rvo/',
+  iconeInstagram: PASTA_ICONES + '02 Icone_Instagram.png',
+
+  // cartão da página inicial
+  cartaoTitulo: 'Conheça o Coletivo RVO',
+  cartaoResumo: 'Um espaço para reunir pessoas, ideias e ações por uma Fazenda Rio Grande mais justa.'
 };
 
 
@@ -353,6 +361,56 @@ function lista(titulo, noticias, verTodas, vazio) {
 }
 
 
+// ---------- Destaque das palavras "Coletivo RVO", "Coletivo" e "RVO" ----------
+// só as versões com inicial maiúscula; "coletivo" minúsculo fica normal.
+// "Coletivo RVO" vem primeiro na lista para virar um link só.
+function comDestaque(texto) {
+  return texto.split(/(Coletivo RVO|Coletivo|RVO)/).map((parte, i) => {
+    // as posições ímpares do split são as palavras encontradas
+    if (i % 2 === 0) return parte;
+
+    return el('a', {
+      class: 'dest-rvo',
+      href: COLETIVO.instagram,
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    }, parte);
+  });
+}
+
+
+// ---------- Cartão do Coletivo na página inicial ----------
+function cartaoColetivo() {
+  const cartao = el('a', { class: 'card', href: 'coletivo.html' });
+
+  const img = el('img', {
+    src: encodeURI(COLETIVO.imagem),
+    alt: COLETIVO.legenda,
+    loading: 'lazy'
+  });
+
+  // se a imagem não existir, o cartão continua funcionando sem ela
+  img.onerror = () => {
+    img.remove();
+    cartao.classList.add('sem-img');
+  };
+
+  cartao.append(
+    img,
+    el('div', { class: 'texto' },
+      el('span', { class: 'cat' }, 'Institucional'),
+      el('h3', {}, COLETIVO.cartaoTitulo),
+      el('p', { class: 'meta resumo' }, COLETIVO.cartaoResumo)
+    )
+  );
+
+  return el('section', { class: 'secao coletivo-home' },
+    el('header', {}, el('h2', {}, 'Coletivo RVO')),
+    el('div', { class: 'grade' }, cartao)
+  );
+}
+
+
 // ---------- Página do Coletivo RVO ----------
 function paginaColetivo() {
   const artigo = el('article', { class: 'noticia coletivo' },
@@ -362,7 +420,7 @@ function paginaColetivo() {
 
   // primeira metade do texto (o 1º parágrafo é o "lide", em destaque)
   COLETIVO.parte1.forEach((texto, i) => {
-    artigo.append(el('p', { class: i === 0 ? 'lide' : '' }, texto));
+    artigo.append(el('p', { class: i === 0 ? 'lide' : '' }, comDestaque(texto)));
   });
 
   // arte do coletivo, no meio do texto
@@ -375,11 +433,22 @@ function paginaColetivo() {
 
   // segunda metade do texto
   COLETIVO.parte2.forEach(texto => {
-    artigo.append(el('p', {}, texto));
+    artigo.append(el('p', {}, comDestaque(texto)));
   });
 
   // frase final
-  artigo.append(el('p', { class: 'fecho' }, COLETIVO.fecho));
+  const icone = el('a', {
+    class: 'ig-fecho',
+    href: COLETIVO.instagram,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+    'aria-label': 'Instagram do Coletivo RVO'
+  }, el('img', { src: encodeURI(COLETIVO.iconeInstagram), alt: 'Instagram' }));
+
+  artigo.append(el('p', { class: 'fecho' },
+    el('span', {}, comDestaque(COLETIVO.fecho)),
+    icone
+  ));
 
   return artigo;
 }
@@ -406,6 +475,7 @@ async function main() {
     // página inicial
     cabecalho();
     wrap.append(lista('Últimas notícias', todas.slice(0, 9), true));
+    wrap.append(cartaoColetivo());
 
   } else if (page === 'coletivo') {
     // página do Coletivo RVO

@@ -315,6 +315,83 @@ article.coletivo p.fecho {
 }
 
 
+/* destaque "Coletivo RVO" / "Coletivo" / "RVO": o vinho da marca vira
+   fundo, com letra clara (a cor escura sozinha não lê bem sobre o fundo) */
+.dest-rvo {
+  background: var(--acento);
+  color: #fff;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background .15s;
+}
+
+.dest-rvo:hover,
+.dest-rvo:active {
+  background: #9a2833;
+}
+
+/* frase final + ícone do Instagram */
+article.coletivo p.fecho {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+article.coletivo .ig-fecho {
+  display: block;
+  flex: none;
+}
+
+article.coletivo .ig-fecho img {
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  object-fit: contain;
+}
+
+article.coletivo .ig-fecho:hover img {
+  opacity: .7;
+}
+
+
+/* ---------- Cartão do Coletivo na inicial ---------- */
+.coletivo-home .grade {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+
+.coletivo-home .card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+}
+
+.coletivo-home .card img {
+  aspect-ratio: auto;
+  max-height: 480px;
+  object-fit: contain;
+  margin-bottom: 0;
+}
+
+.coletivo-home .card.sem-img {
+  grid-template-columns: 1fr;
+}
+
+.coletivo-home .card h3 {
+  font-size: clamp(26px, 3.5vw, 38px);
+}
+
+.coletivo-home .card .meta {
+  font-size: 17px;
+}
+
+
 /* ---------- Rodapé ---------- */
 footer {
   background: var(--verde);
@@ -625,6 +702,17 @@ footer .copy {
   article.coletivo figure.arte {
     margin: 24px 0;
     min-height: 140px;
+  }
+
+  /* cartão do Coletivo na inicial: foto com texto por cima, como os outros */
+  .coletivo-home .card {
+    display: block;
+  }
+
+  .coletivo-home .card img {
+    aspect-ratio: 1 / 1;
+    max-height: none;
+    object-fit: cover;
   }
 
 
