@@ -249,7 +249,7 @@ function rodape() {
           ),
           el('div', {},
             el('h4', {}, 'Expediente'),
-            el('p', {}, `Um espaço para informar, ouvir e dar visibilidade às histórias de ${SITE.cidade}.`),
+            el('p', {}, `Um espaço para informar, ouvir e dar visibilidade aos acontecimentos de ${SITE.cidade}.`),
             el('h4', { class: 'titulo-redes' }, 'Redes sociais'),
             redesSociais()
           )
