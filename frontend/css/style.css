@@ -392,6 +392,26 @@ article.coletivo .ig-fecho:hover img {
 }
 
 
+/* ---------- Texto justificado (padrão jornalístico) ---------- */
+/* hífen automático (lang="pt-BR") evita buracos grandes entre as palavras */
+article.noticia p,
+footer p,
+.card .resumo {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* linhas de data/autor, título e frase final ficam alinhados à esquerda */
+article.noticia p.meta,
+article.coletivo p.fecho {
+  text-align: left;
+  hyphens: none;
+}
+
+
 /* ---------- Rodapé ---------- */
 footer {
   background: var(--verde);
