@@ -9,8 +9,31 @@ const SITE = {
   lema: 'A informação nasce onde a vida acontece.',
   sub: 'A notícia que dá voz à sociedade',
   cidade: 'Fazenda Rio Grande',
-  logo: 'img/logo.svg'   // coloque sua logo aqui: Vozes da Classe\img\logo.svg
+  // ícone da foice e martelo, que aparece ao lado esquerdo do título
+  logo: 'img/Nova pasta/Icones do Site/01 Icone_Foice_e_Martelo.png'
 };
+
+// ---------- Redes sociais (ícones do rodapé) ----------
+// para trocar um link, é só mexer na linha "link" da rede
+const PASTA_ICONES = 'img/Nova pasta/Icones do Site/';
+
+const REDES = [
+  {
+    nome: 'Instagram',
+    link: 'https://www.instagram.com/vozesdaclasse/',
+    icone: PASTA_ICONES + '02 Icone_Instagram.png'
+  },
+  {
+    nome: 'Twitter',
+    link: 'https://x.com/VozesdaClasse',
+    icone: PASTA_ICONES + '03 Icone_Twitter.png'
+  },
+  {
+    nome: 'TikTok',
+    link: 'https://www.tiktok.com/@jornalvozesdaclasse',
+    icone: PASTA_ICONES + '04 Icone_TikTok.png'
+  }
+];
 
 const CATS = {
   'politica': 'Política',
@@ -77,7 +100,7 @@ function logo(tag = 'h1') {
 function slotLogo() {
   const img = el('img', {
     class: 'logo-slot',
-    src: SITE.logo,
+    src: encodeURI(SITE.logo),
     alt: 'Logo ' + SITE.nome
   });
 
@@ -187,6 +210,30 @@ function cabecalho(catAtual) {
 }
 
 
+// ---------- Ícones das redes sociais ----------
+function redesSociais() {
+  const caixa = el('div', { class: 'redes' });
+
+  REDES.forEach(rede => {
+    const link = el('a', {
+      href: rede.link,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      'aria-label': rede.nome
+    });
+
+    link.append(el('img', {
+      src: encodeURI(rede.icone),
+      alt: rede.nome
+    }));
+
+    caixa.append(link);
+  });
+
+  return caixa;
+}
+
+
 // ---------- Rodapé ----------
 function rodape() {
   const l = el('div', { class: 'logo' });
@@ -202,7 +249,9 @@ function rodape() {
           ),
           el('div', {},
             el('h4', {}, 'Expediente'),
-            el('p', {}, `Um espaço para informar, ouvir e dar visibilidade às histórias de ${SITE.cidade}.`)
+            el('p', {}, `Um espaço para informar, ouvir e dar visibilidade às histórias de ${SITE.cidade}.`),
+            el('h4', { class: 'titulo-redes' }, 'Redes sociais'),
+            redesSociais()
           )
         ),
         el('div', { class: 'copy' }, `© ${new Date().getFullYear()} Jornal ${SITE.nome}. Todos os direitos reservados.`)

@@ -313,6 +313,31 @@ footer .logo span {
   color: var(--branco);
 }
 
+/* ícones das redes sociais (rodapé) */
+footer .titulo-redes {
+  margin-top: 22px;
+}
+
+footer .redes {
+  display: flex;
+  gap: 14px;
+}
+
+footer .redes a {
+  display: block;
+}
+
+footer .redes img {
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+footer .redes a:hover img {
+  opacity: .7;
+}
+
 footer .copy {
   border-top: 1px solid rgba(225, 225, 242, .25);
   margin-top: 30px;
