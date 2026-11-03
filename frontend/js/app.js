@@ -47,6 +47,47 @@ const CATS = {
 };
 
 
+// ---------- Texto da página do Coletivo RVO ----------
+// o texto está dividido em duas partes: a imagem entra entre elas
+const COLETIVO = {
+  titulo: 'Sobre o Coletivo RVO (Revolução)',
+
+  imagem: 'img/Nova pasta/Postagens do Coletivo/01_Post_Site_Coletivo.png',
+  legenda: 'Arte do Coletivo RVO',
+
+  // antes da imagem
+  parte1: [
+    'O Coletivo RVO tem como objetivo reunir pessoas com ideias, conhecimentos e vontade de contribuir para a construção de uma sociedade mais justa e consciente. Queremos ser um espaço onde diferentes pessoas possam compartilhar experiências, desenvolver iniciativas e transformar boas ideias em ações que tragam benefícios para a população, especialmente para as classes e grupos que historicamente enfrentam desigualdades, injustiças e opressões.',
+
+    'Acreditamos que a transformação social acontece quando as pessoas se unem, participam e colocam suas ideias em prática. Por isso, o coletivo está sendo estruturado para atuar em diferentes frentes, abrangendo áreas como educação, cultura, arte, comunicação e ação social. Essas frentes representam diferentes possibilidades de participação e contribuição para a sociedade.',
+
+    'Uma delas é o jornal “Vozes da Classe”, que tem como propósito dar visibilidade aos problemas e descasos de Fazenda Rio Grande, levar informação à população, abrir espaço para as demandas da comunidade e cobrar do poder público atenção e providências diante dos problemas que afetam a cidade.',
+
+    'As demais frentes de atuação ainda estão em fase de estudo e planejamento. Estamos avaliando possibilidades, discutindo ideias e buscando caminhos para que cada iniciativa seja desenvolvida de forma responsável, organizada e alinhada aos princípios do coletivo. Queremos construir esse projeto aos poucos, respeitando nossas possibilidades e valorizando a participação de todos.'
+  ],
+
+  // depois da imagem
+  parte2: [
+    'Um dos nossos princípios fundamentais é o respeito a todas as pessoas, independentemente de sua origem, identidade, condição social, crença, orientação ou qualquer outra característica. Não abrimos espaço para preconceito, discriminação ou qualquer forma de desrespeito. Para nós, todas as pessoas merecem ser ouvidas, respeitadas e valorizadas. Esse é um princípio inegociável.',
+
+    'Também somos um coletivo independente de partidos políticos. Isso significa que não temos compromisso com interesses partidários, mas com a população e com as causas que defendemos. Temos liberdade para reconhecer boas iniciativas, apoiar ações que tragam benefícios à sociedade e cobrar qualquer representante público quando suas atitudes não correspondem aos interesses da população, independentemente de seu partido ou posicionamento político.',
+
+    'Acreditamos que uma sociedade melhor também se constrói por meio do conhecimento, do diálogo e do pensamento crítico. Por isso, valorizamos o estudo, o debate e a troca de ideias como ferramentas importantes para compreender a realidade, defender nossas causas e buscar mudanças com responsabilidade e consciência.',
+
+    'Queremos ajudar a construir soluções. Acreditamos que ninguém precisa enfrentar as dificuldades sozinho e que a união de pessoas, ideias e esforços pode gerar mudanças reais. Queremos incentivar a participação popular e mostrar que todos podem contribuir, cada um à sua maneira, para transformar a realidade ao seu redor.',
+
+    'O Coletivo RVO é um espaço para quem não quer apenas observar os problemas da sociedade, mas deseja participar, propor ideias e fazer parte das mudanças. Nosso propósito é contribuir para a construção de uma Fazenda Rio Grande mais justa, participativa, consciente e comprometida com o bem-estar de sua população.',
+
+    'Se você se identifica com nossa proposta e gostaria de contribuir de alguma forma, será muito bem-vindo(a)! Entre em contato conosco por meio das redes sociais disponíveis nesta página. Será um prazer conhecer suas ideias, ouvir suas sugestões e contar com sua participação nessa construção coletiva.',
+
+    'Toda contribuição é bem-vinda. Afinal, uma transformação começa quando decidimos fazer parte dela!'
+  ],
+
+  // frase final, em destaque
+  fecho: 'Um abraço e seja bem-vindo(a) ao Coletivo RVO!'
+};
+
+
 // ---------- Funções de apoio ----------
 
 // cria um elemento: el('div', {class:'x'}, filho1, filho2)
@@ -144,7 +185,9 @@ function cabecalho(catAtual) {
   // lista de links: Início + uma por seção
   const itens = [
     ['index.html', 'Início', !catAtual && document.body.dataset.page === 'home'],
-    ...Object.entries(CATS).map(([slug, nome]) => ['categoria.html?c=' + slug, nome, slug === catAtual])
+    ...Object.entries(CATS).map(([slug, nome]) => ['categoria.html?c=' + slug, nome, slug === catAtual]),
+    // aba do coletivo, sempre por último no menu
+    ['coletivo.html', 'Coletivo RVO', document.body.dataset.page === 'coletivo']
   ];
 
   // nome pequeno que aparece na barra mobile
@@ -249,7 +292,7 @@ function rodape() {
           ),
           el('div', {},
             el('h4', {}, 'Expediente'),
-            el('p', {}, `Um espaço para informar, ouvir e dar visibilidade aos acontecimentos de ${SITE.cidade}.`),
+            el('p', {}, `Um espaço para informar, ouvir e dar visibilidade às histórias de ${SITE.cidade}.`),
             el('h4', { class: 'titulo-redes' }, 'Redes sociais'),
             redesSociais()
           )
@@ -310,6 +353,38 @@ function lista(titulo, noticias, verTodas, vazio) {
 }
 
 
+// ---------- Página do Coletivo RVO ----------
+function paginaColetivo() {
+  const artigo = el('article', { class: 'noticia coletivo' },
+    el('span', { class: 'cat' }, 'Institucional'),
+    el('h1', {}, COLETIVO.titulo)
+  );
+
+  // primeira metade do texto (o 1º parágrafo é o "lide", em destaque)
+  COLETIVO.parte1.forEach((texto, i) => {
+    artigo.append(el('p', { class: i === 0 ? 'lide' : '' }, texto));
+  });
+
+  // arte do coletivo, no meio do texto
+  const figura = el('figure', { class: 'arte' });
+  figura.append(el('img', {
+    src: encodeURI(COLETIVO.imagem),
+    alt: COLETIVO.legenda
+  }));
+  artigo.append(figura);
+
+  // segunda metade do texto
+  COLETIVO.parte2.forEach(texto => {
+    artigo.append(el('p', {}, texto));
+  });
+
+  // frase final
+  artigo.append(el('p', { class: 'fecho' }, COLETIVO.fecho));
+
+  return artigo;
+}
+
+
 // ---------- Monta a página ----------
 async function main() {
   let todas = [];
@@ -331,6 +406,12 @@ async function main() {
     // página inicial
     cabecalho();
     wrap.append(lista('Últimas notícias', todas.slice(0, 9), true));
+
+  } else if (page === 'coletivo') {
+    // página do Coletivo RVO
+    cabecalho();
+    document.title = 'Coletivo RVO — ' + SITE.nome;
+    wrap.append(paginaColetivo());
 
   } else if (page === 'categoria') {
     // página de seção ou resultado de busca

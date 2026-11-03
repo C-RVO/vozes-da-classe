@@ -283,6 +283,38 @@ article.noticia img {
 }
 
 
+/* ---------- Página do Coletivo RVO ---------- */
+
+/* primeiro parágrafo em destaque */
+article.coletivo p.lide {
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+/* arte do coletivo no meio do texto (o fundo reserva o espaço) */
+article.coletivo figure.arte {
+  margin: 32px 0;
+  background: var(--verde);
+  border: 1px solid var(--linha);
+  min-height: 180px;
+}
+
+article.coletivo figure.arte img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+/* frase final */
+article.coletivo p.fecho {
+  margin-top: 32px;
+  padding-top: 18px;
+  border-top: 1px solid var(--linha);
+  font-weight: 700;
+}
+
+
 /* ---------- Rodapé ---------- */
 footer {
   background: var(--verde);
@@ -583,6 +615,16 @@ footer .copy {
 
   article.noticia p {
     font-size: 18px;
+  }
+
+
+  article.coletivo p.lide {
+    font-size: 20px;
+  }
+
+  article.coletivo figure.arte {
+    margin: 24px 0;
+    min-height: 140px;
   }
 
 
