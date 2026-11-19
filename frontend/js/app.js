@@ -101,7 +101,7 @@ const COLETIVO = {
 const PASTA_BATALHA = 'img/Postagens_Batalha/';
 
 const COLUNA = {
-  titulo: 'Momento Conhecimento: a história do Hip Hop na Batalha da Hortência',
+  titulo: 'Batalha da Hortência',
   rotulo: 'Coluna',
 
   imagens: [
