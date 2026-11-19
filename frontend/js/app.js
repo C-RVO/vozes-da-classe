@@ -96,6 +96,49 @@ const COLETIVO = {
 };
 
 
+// ---------- Coluna: Batalha da Hortência ----------
+// o texto está dividido em três blocos; cada imagem entra entre eles
+const PASTA_BATALHA = 'img/Postagens_Batalha/';
+
+const COLUNA = {
+  titulo: 'Momento Conhecimento: a história do Hip Hop na Batalha da Hortência',
+  rotulo: 'Coluna',
+
+  imagens: [
+    { src: PASTA_BATALHA + '01_Hortencia_Post_Novembro_2026.png', legenda: 'Bandeira erguida durante a Batalha da Hortência' },
+    { src: PASTA_BATALHA + '02_Hortencia_Post_Novembro_2026.png', legenda: 'Participantes da Batalha da Hortência reunidos diante do grafite' },
+    { src: PASTA_BATALHA + '03_Hortencia_Post_Novembro_2026.png', legenda: 'Roda da Batalha da Hortência durante o Momento Conhecimento' }
+  ],
+
+  // blocos de texto: bloco 1 | imagem 1 | bloco 2 | imagem 2 | bloco 3 | imagem 3
+  blocos: [
+    [
+      'O “Momento Conhecimento”, como o intitulamos, diz respeito a uma experiência cuja possibilidade e necessidade sempre estiveram em nossas discussões. Entretanto, como eu costumava ser cotado para assumir o papel de mestre de cerimônias desse momento, seu início dependia diretamente da minha disposição. Por alguma razão, não me sentia à altura da responsabilidade de conduzir algo que sempre enxerguei com tanto apreço.',
+
+      'Foi somente a partir da compreensão pragmática — embora, do ponto de vista teórico, esse entendimento já me fosse claro havia bastante tempo — da dimensão coletiva daquele espaço que consegui ressignificar essa responsabilidade. Compreendi que o “Momento Conhecimento” não deveria girar em torno de mim, mas daquilo que eu poderia acrescentar ao coletivo. Não se tratava de uma contribuição individualizada, mas de me reconhecer como mais um participante disposto a agregar ao ritual da batalha. Foi justamente essa dissolução da responsabilidade individual que, para mim, tornou possível darmos início à experiência.'
+    ],
+    [
+      'O “Momento Conhecimento” acontece alguns minutos antes do início das batalhas, enquanto ainda estamos coletando os nomes dos MCs para fazermos as chaves que comporão o momento principal. Assim como na batalha, os participantes se organizam em roda, criando um espaço de troca no qual é apresentada e discutida alguma temática relacionada à consciência histórica. Trata-se de uma abordagem profundamente vinculada à ideia de historicizar a cosmovisão daqueles que participam de um evento de Hip Hop.',
+
+      'Para nós, abordar a história do Hip Hop dentro de um evento de Hip Hop é uma necessidade, afinal, essa cultura está intrinsecamente ligada à disputa pela consciência e pelo controle das narrativas históricas, ou seja, à disputa sobre quem conta, constrói e legitima a história.'
+    ],
+    [
+      'Posto isso, acreditamos no senso crítico do público frequentador das batalhas e, justamente por isso, as discussões são pensadas com o propósito de estimular a ampliação do repertório de ferramentas e perspectivas dos participantes, contribuindo para que desenvolvam diferentes formas de interpretar, questionar e enxergar a realidade a partir das contribuições que a História, as Ciências Sociais, a Filosofia, a Educação e, sobretudo, o próprio Hip Hop têm a oferecer.'
+    ]
+  ],
+
+  // indicativo final, com o ícone do Instagram
+  fecho: 'Conheça a Batalha da Hortência',
+  instagram: 'https://www.instagram.com/batalhadahortencia/',
+
+  // como aparece nas listas (Início e Cultura)
+  data: '2026-11-19',
+  categoria: 'cultura',
+  autor: 'Batalha da Hortência',
+  cartaoResumo: 'Antes das batalhas, a roda também é espaço de consciência histórica: conheça o Momento Conhecimento.'
+};
+
+
 // ---------- Funções de apoio ----------
 
 // cria um elemento: el('div', {class:'x'}, filho1, filho2)
@@ -320,7 +363,7 @@ function card(n, destaque) {
   if (destaque) classes += ' destaque';
   if (!n.imagem) classes += ' sem-img';
 
-  return el('a', { class: classes, href: 'noticia.html?id=' + encodeURIComponent(n.id) },
+  return el('a', { class: classes, href: n.url || 'noticia.html?id=' + encodeURIComponent(n.id) },
 
     n.imagem ? el('img', { src: n.imagem, alt: n.legenda || '', loading: 'lazy' }) : '',
 
@@ -454,6 +497,48 @@ function paginaColetivo() {
 }
 
 
+// ---------- Página da Coluna ----------
+function paginaColuna() {
+  const artigo = el('article', { class: 'noticia coletivo coluna' },
+    el('span', { class: 'cat' }, COLUNA.rotulo),
+    el('h1', {}, COLUNA.titulo)
+  );
+
+  let primeiro = true;
+
+  COLUNA.blocos.forEach((bloco, i) => {
+    bloco.forEach(texto => {
+      artigo.append(el('p', { class: primeiro ? 'lide' : '' }, texto));
+      primeiro = false;
+    });
+
+    // imagem depois de cada bloco
+    const foto = COLUNA.imagens[i];
+    if (foto) {
+      artigo.append(el('figure', { class: 'arte' },
+        el('img', { src: encodeURI(foto.src), alt: foto.legenda })
+      ));
+    }
+  });
+
+  // indicativo final: texto + ícone do Instagram, os dois com o link
+  const alvo = {
+    href: COLUNA.instagram,
+    target: '_blank',
+    rel: 'noopener noreferrer'
+  };
+
+  artigo.append(el('p', { class: 'fecho' },
+    el('a', { ...alvo, class: 'link-fecho' }, COLUNA.fecho),
+    el('a', { ...alvo, class: 'ig-fecho', 'aria-label': 'Instagram da Batalha da Hortência' },
+      el('img', { src: encodeURI(COLETIVO.iconeInstagram), alt: 'Instagram' })
+    )
+  ));
+
+  return artigo;
+}
+
+
 // ---------- Monta a página ----------
 async function main() {
   let todas = [];
@@ -461,10 +546,28 @@ async function main() {
   // carrega as notícias, da mais nova para a mais antiga
   try {
     const resposta = await fetch('data/noticias.json');
-    todas = (await resposta.json()).sort((a, b) => b.data.localeCompare(a.data));
+    todas = await resposta.json();
   } catch (erro) {
     console.error(erro);
   }
+
+  // a coluna entra na lista como uma notícia fixa: fica sempre em primeiro
+  // (para tirar o destaque, é só apagar "fixo: true")
+  todas.push({
+    id: 'coluna-hortencia',
+    url: 'coluna.html',
+    fixo: true,
+    categoria: COLUNA.categoria,
+    titulo: COLUNA.titulo,
+    resumo: COLUNA.cartaoResumo,
+    data: COLUNA.data,
+    autor: COLUNA.autor,
+    imagem: encodeURI(COLUNA.imagens[0].src),
+    legenda: COLUNA.imagens[0].legenda
+  });
+
+  // fixas primeiro; depois da mais nova para a mais antiga
+  todas.sort((a, b) => (b.fixo ? 1 : 0) - (a.fixo ? 1 : 0) || b.data.localeCompare(a.data));
 
   const page = document.body.dataset.page;
   const app = document.getElementById('app');
@@ -476,6 +579,12 @@ async function main() {
     cabecalho();
     wrap.append(lista('Últimas notícias', todas.slice(0, 9), true));
     wrap.append(cartaoColetivo());
+
+  } else if (page === 'coluna') {
+    // página da coluna (aparece marcada na aba Cultura)
+    cabecalho('cultura');
+    document.title = COLUNA.titulo + ' — ' + SITE.nome;
+    wrap.append(paginaColuna());
 
   } else if (page === 'coletivo') {
     // página do Coletivo RVO

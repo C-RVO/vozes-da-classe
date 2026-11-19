@@ -341,6 +341,15 @@ article.coletivo p.fecho {
   gap: 8px 14px;
 }
 
+/* texto do indicativo final (coluna) */
+article.coletivo a.link-fecho {
+  border-bottom: 2px solid var(--acento);
+}
+
+article.coletivo a.link-fecho:hover {
+  opacity: .7;
+}
+
 article.coletivo .ig-fecho {
   display: block;
   flex: none;
