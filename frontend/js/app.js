@@ -105,6 +105,7 @@ const COLETIVO = {
 // Cada coluna tem texto em blocos; a imagem N entra depois do bloco N.
 // "categorias": a primeira é a principal (etiqueta e menu); a coluna
 // aparece na lista de todas as categorias que estiverem aqui.
+// "video" (opcional): vídeo do YouTube exibido abaixo do título.
 // Para uma nova coluna: copie um item, troque os dados e use
 // coluna.html?id=NOME-DA-CHAVE como endereço.
 const PASTA_BATALHA = 'img/Postagens_Batalha/';
@@ -157,6 +158,13 @@ const COLUNAS = {
     titulo: 'Fazenda Rio Grande celebra o Dia da Consciência Negra com cultura, arte e resistência',
     data: '2026-11-21',
     resumo: 'Com roda de capoeira, batalha de rima e show de Marechal, a Secretaria Municipal de Cultura celebrou o Dia da Consciência Negra e a memória de Zumbi dos Palmares.',
+
+    // vídeo do YouTube, logo abaixo do título (só o código depois de "youtu.be/")
+    video: {
+      id: 'CVA83N6Enrs',
+      titulo: 'Entrevista realizada pelos organizadores do Jornal Vozes da Classe',
+      legenda: 'Entrevista realizada pelos organizadores do Jornal Vozes da Classe'
+    },
 
     imagens: [
       { src: PASTA_20NOV + '20.jpg', legenda: 'Evento do Dia da Consciência Negra em Fazenda Rio Grande' },
@@ -576,6 +584,23 @@ function paginaColuna(col) {
     el('span', { class: 'cat' }, CATS[col.categorias[0]] || col.categorias[0]),
     el('h1', {}, col.titulo)
   );
+
+  // vídeo do YouTube dentro do site (sem sair da página)
+  if (col.video) {
+    const quadro = el('iframe', {
+      src: 'https://www.youtube-nocookie.com/embed/' + col.video.id,
+      title: col.video.titulo,
+      allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+      referrerpolicy: 'strict-origin-when-cross-origin',
+      allowfullscreen: '',
+      loading: 'lazy'
+    });
+
+    artigo.append(el('div', { class: 'video-bloco' },
+      el('div', { class: 'video' }, quadro),
+      col.video.legenda ? el('p', { class: 'meta legenda-video' }, col.video.legenda) : ''
+    ));
+  }
 
   let primeiro = true;
 

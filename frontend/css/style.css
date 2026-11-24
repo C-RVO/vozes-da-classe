@@ -548,6 +548,37 @@ article.noticia figure.foto-artigo img {
 }
 
 
+/* ---------- Vídeo do YouTube dentro da coluna ----------
+   quadro 16:9 que se ajusta à largura da tela, com o mesmo
+   canto arredondado das imagens */
+.video-bloco {
+  margin: 24px 0 32px;
+}
+
+.video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--verde);
+  border: 1px solid var(--linha);
+}
+
+.video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+article.noticia p.legenda-video {
+  margin: 8px 0 0;
+  font: 14px/1.4 Helvetica, Arial, sans-serif;
+  color: var(--suave);
+}
+
+
 /* =========================================================
    MOBILE (até 700px)
    Layout parecido com Mídia Ninja / ICL:
