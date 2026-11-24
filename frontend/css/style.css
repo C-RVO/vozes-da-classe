@@ -484,6 +484,70 @@ footer .copy {
 }
 
 
+/* ---------- Imagens do site: mesmo padrão em todo lugar ----------
+   moldura com bordas arredondadas; a imagem dá um zoom suave quando
+   o mouse passa por cima (cards e colunas). A imagem mantém sua
+   proporção: nas colunas aparece inteira; nos cards preenche a moldura. */
+.foto,
+figure.arte {
+  overflow: hidden;
+  border-radius: 12px;
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+
+.card .foto {
+  margin-bottom: 12px;
+}
+
+.card img {
+  margin-bottom: 0;
+}
+
+.foto img,
+figure.arte img {
+  transition: transform .6s ease;
+}
+
+/* foto de notícia comum (página da notícia) */
+figure.foto-artigo {
+  margin: 18px 0;
+}
+
+article.noticia figure.foto-artigo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+/* animação só onde existe mouse (no celular não gruda no toque) */
+@media (hover: hover) {
+  .card:hover .foto img,
+  figure.arte:hover img {
+    transform: scale(1.06);
+  }
+
+  .card:hover .foto,
+  figure.arte:hover {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foto,
+  figure.arte,
+  .foto img,
+  figure.arte img {
+    transition: none;
+  }
+
+  .card:hover .foto img,
+  figure.arte:hover img {
+    transform: none;
+  }
+}
+
+
 /* =========================================================
    MOBILE (até 700px)
    Layout parecido com Mídia Ninja / ICL:
@@ -652,6 +716,16 @@ footer .copy {
   .card img {
     aspect-ratio: 4 / 3;
     margin-bottom: 0;
+  }
+
+  /* no mobile o card inteiro é a moldura da foto */
+  .card {
+    border-radius: 12px;
+  }
+
+  .card .foto {
+    margin-bottom: 0;
+    border-radius: 0;
   }
 
   /* card sem foto precisa de altura própria */
