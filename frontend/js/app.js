@@ -667,6 +667,12 @@ async function main() {
     document.title = col.titulo + ' — ' + SITE.nome;
     wrap.append(paginaColuna(col));
 
+  } else if (page === 'coletivo') {
+    // página do Coletivo RVO
+    cabecalho();
+    document.title = 'Coletivo RVO — ' + SITE.nome;
+    wrap.append(paginaColetivo());
+
   } else if (page === 'categoria') {
     // página de seção ou resultado de busca
     const c = params.get('c');
